@@ -1,0 +1,1 @@
+﻿Allows adding of custom fluids while maintaining cross-mod compatibility
