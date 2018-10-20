@@ -12,7 +12,6 @@ namespace FluidLibrary.Content
 		public virtual string Texture => (GetType().Namespace + "." + Name).Replace('.', '/');
 
 		public int volume;
-		public int maxVolume;
 
 		public virtual ModFluid Clone() => (ModFluid)MemberwiseClone();
 

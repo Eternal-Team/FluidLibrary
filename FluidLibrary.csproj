@@ -50,6 +50,9 @@
   <ItemGroup>
     <Compile Include="Content\FluidLoader.cs" />
     <Compile Include="Content\FluidSerializer.cs" />
+    <Compile Include="Content\VanillaFluids\Honey.cs" />
+    <Compile Include="Content\VanillaFluids\Lava.cs" />
+    <Compile Include="Content\VanillaFluids\Water.cs" />
     <Compile Include="FluidLibrary.cs" />
     <Compile Include="Content\ModFluid.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
