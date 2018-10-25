@@ -1,5 +1,6 @@
 ﻿using FluidLibrary.Content;
 using Terraria.ModLoader;
+using Terraria.ModLoader.IO;
 
 namespace FluidLibrary
 {
@@ -8,6 +9,7 @@ namespace FluidLibrary
 		public override void Load()
 		{
 			FluidLoader.Load();
+			TagSerializer.AddSerializer(new FluidSerializer<ModFluid>());
 		}
 
 		public override void Unload()
