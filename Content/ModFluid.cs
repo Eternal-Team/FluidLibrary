@@ -12,6 +12,7 @@ namespace FluidLibrary.Content
 		public virtual string Texture => (GetType().Namespace + "." + Name).Replace('.', '/');
 
 		public int volume;
+		public float VolumeBuckets => volume / 255f;
 
 		public virtual ModFluid Clone() => (ModFluid)MemberwiseClone();
 

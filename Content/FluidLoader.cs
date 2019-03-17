@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.ModLoader;
@@ -19,7 +18,7 @@ namespace FluidLibrary.Content
 
 		public static void Load()
 		{
-			foreach (Mod mod in ModLoader.LoadedMods.Where(mod => mod != null && mod.Code != null))
+			foreach (Mod mod in ModLoader.Mods.Where(mod => mod != null && mod.Code != null))
 			{
 				foreach (Type type in mod.Code.GetTypes().Where(type => !type.IsAbstract && type.IsSubclassOf(typeof(ModFluid)))) AutoloadFluid(type, mod);
 			}
@@ -43,10 +42,8 @@ namespace FluidLibrary.Content
 
 			modFluid.Initialize();
 
-			if (!textureCache.ContainsKey(modFluid.Texture)) textureCache.Add(modFluid.Texture, ModLoader.GetTexture(modFluid.Texture));
+			if (!textureCache.ContainsKey(modFluid.Texture)) textureCache.Add(modFluid.Texture, ModContent.GetTexture(modFluid.Texture));
 			TagSerializer.AddSerializer((TagSerializer)Activator.CreateInstance(typeof(FluidSerializer<>).MakeGenericType(type)));
-
-			Debug.WriteLine($"Loaded {name}");
 		}
 	}
 }

@@ -12,7 +12,10 @@ namespace FluidLibrary.Content
 
 		public override T Deserialize(TagCompound tag)
 		{
-			ModFluid fluid = FluidLoader.GetFluid(tag.GetString("Type")).Clone();
+			string type = tag.GetString("Type");
+			if (string.IsNullOrWhiteSpace(type)) return null;
+
+			ModFluid fluid = FluidLoader.GetFluid(type).Clone();
 			fluid.volume = tag.GetInt("Volume");
 
 			return (T)fluid;
