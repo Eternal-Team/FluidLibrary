@@ -16,5 +16,29 @@ namespace FluidLibrary
 		{
 			FluidLoader.Unload();
 		}
+
+		public static int GetFluidIDByName(string name)
+		{
+			switch (name)
+			{
+				case "Water": return 0;
+				case "Lava": return 1;
+				case "Honey": return 2;
+			}
+
+			return -1;
+		}
+
+		public static string GetFluidNameByID(int type)
+		{
+			switch (type)
+			{
+				case 0: return "Water";
+				case 1: return "Lava";
+				case 2: return "Honey";
+			}
+
+			return null;
+		}
 	}
 }

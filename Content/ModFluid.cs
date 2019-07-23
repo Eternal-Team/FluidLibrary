@@ -25,5 +25,17 @@ namespace FluidLibrary.Content
 			var copy = (ModFluid)MemberwiseClone();
 			return copy;
 		}
+
+		public override int GetHashCode()
+		{
+			return Name.GetHashCode();
+		}
+
+		public override bool Equals(object obj)
+		{
+			if (obj is ModFluid fluid) return fluid.Name == Name;
+
+			return false;
+		}
 	}
 }

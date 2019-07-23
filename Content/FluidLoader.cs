@@ -1,7 +1,7 @@
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Xna.Framework.Graphics;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 
@@ -9,14 +9,14 @@ namespace FluidLibrary.Content
 {
 	public static class FluidLoader
 	{
-		public static Dictionary<string, ModFluid> fluids = new Dictionary<string, ModFluid>();
-		public static Dictionary<string, Texture2D> textureCache = new Dictionary<string, Texture2D>();
+		internal static Dictionary<string, ModFluid> fluids = new Dictionary<string, ModFluid>();
+		internal static Dictionary<string, Texture2D> textureCache = new Dictionary<string, Texture2D>();
 
 		public static ModFluid GetFluid(string name) => fluids.TryGetValue(name, out ModFluid item) ? item : null;
 
 		public static T GetFluid<T>() where T : ModFluid => (T)GetFluid(typeof(T).Name);
 
-		public static void Load()
+		internal static void Load()
 		{
 			foreach (Mod mod in ModLoader.Mods.Where(mod => mod != null && mod.Code != null))
 			{
@@ -24,7 +24,7 @@ namespace FluidLibrary.Content
 			}
 		}
 
-		public static void Unload()
+		internal static void Unload()
 		{
 			fluids.Clear();
 			textureCache.Clear();
