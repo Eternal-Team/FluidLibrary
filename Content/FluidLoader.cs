@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
@@ -44,6 +45,19 @@ namespace FluidLibrary.Content
 
 			if (!textureCache.ContainsKey(modFluid.Texture)) textureCache.Add(modFluid.Texture, ModContent.GetTexture(modFluid.Texture));
 			TagSerializer.AddSerializer((TagSerializer)Activator.CreateInstance(typeof(FluidSerializer<>).MakeGenericType(type)));
+		}
+
+		public static void Write(this BinaryWriter writer, ModFluid fluid)
+		{
+			writer.Write(fluid.Name);
+			writer.Write(fluid.volume);
+		}
+
+		public static ModFluid ReadFluid(this BinaryReader reader)
+		{
+			ModFluid fluid = GetFluid(reader.ReadString());
+			fluid.volume = reader.ReadInt32();
+			return fluid;
 		}
 	}
 }
