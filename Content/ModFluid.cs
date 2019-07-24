@@ -14,7 +14,12 @@ namespace FluidLibrary.Content
 		public int volume;
 		public float VolumeBuckets => volume / 255f;
 
-		public virtual ModFluid Clone() => (ModFluid)MemberwiseClone();
+		public virtual ModFluid Clone()
+		{
+			ModFluid fluid = (ModFluid)MemberwiseClone();
+			fluid.volume = 0;
+			return fluid;
+		}
 
 		public virtual void Initialize()
 		{
