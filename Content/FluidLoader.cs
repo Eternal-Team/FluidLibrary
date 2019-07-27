@@ -17,6 +17,8 @@ namespace FluidLibrary.Content
 
 		public static T GetFluid<T>() where T : ModFluid => (T)GetFluid(typeof(T).Name);
 
+		public static Texture2D GetTexture(string name) => textureCache.TryGetValue(name, out Texture2D texture) ? texture : null;
+
 		internal static void Load()
 		{
 			foreach (Mod mod in ModLoader.Mods.Where(mod => mod != null && mod.Code != null))

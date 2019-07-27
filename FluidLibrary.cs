@@ -21,9 +21,12 @@ namespace FluidLibrary
 		{
 			switch (name)
 			{
-				case "Water": return 0;
-				case "Lava": return 1;
-				case "Honey": return 2;
+				case "Water":
+					return 0;
+				case "Lava":
+					return 1;
+				case "Honey":
+					return 2;
 			}
 
 			return -1;
@@ -33,9 +36,12 @@ namespace FluidLibrary
 		{
 			switch (type)
 			{
-				case 0: return "Water";
-				case 1: return "Lava";
-				case 2: return "Honey";
+				case 0:
+					return "Water";
+				case 1:
+					return "Lava";
+				case 2:
+					return "Honey";
 			}
 
 			return null;
