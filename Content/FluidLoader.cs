@@ -45,7 +45,7 @@ namespace FluidLibrary.Content
 
 			modFluid.Initialize();
 
-			if (!textureCache.ContainsKey(modFluid.Texture)) textureCache.Add(modFluid.Texture, ModContent.GetTexture(modFluid.Texture));
+			if (!textureCache.ContainsKey(modFluid.Name)) textureCache.Add(modFluid.Name, ModContent.GetTexture(modFluid.Texture));
 			TagSerializer.AddSerializer((TagSerializer)Activator.CreateInstance(typeof(FluidSerializer<>).MakeGenericType(type)));
 		}
 
