@@ -53,13 +53,19 @@ namespace FluidLibrary.Content
 
 		public static void Write(this BinaryWriter writer, ModFluid fluid)
 		{
-			writer.Write(fluid.Name);
-			writer.Write(fluid.volume);
+			if (fluid == null) writer.Write("null");
+			else
+			{
+				writer.Write(fluid.Name);
+				writer.Write(fluid.volume);
+			}
 		}
 
 		public static ModFluid ReadFluid(this BinaryReader reader)
 		{
-			ModFluid fluid = GetFluid(reader.ReadString());
+			string name = reader.ReadString();
+			if (name == "null") return null;
+			ModFluid fluid = GetFluid(name).Clone();
 			fluid.volume = reader.ReadInt32();
 			return fluid;
 		}
