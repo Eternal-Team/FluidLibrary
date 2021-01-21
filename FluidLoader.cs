@@ -35,5 +35,12 @@ namespace FluidLibrary
 		public static int FluidType<T>() where T : BaseFluid => ModContent.GetInstance<T>()?.Type ?? -1;
 
 		public static BaseFluid GetFluid(int type) => fluids[type];
+		
+		public static T CreateInstance<T>() where T : BaseFluid
+		{
+			T instance = (T)ModContent.GetInstance<T>().Clone();
+			// instance.SetDefaults();
+			return instance;
+		}
 	}
 }

@@ -80,10 +80,10 @@ namespace FluidLibrary
 
 			// OnFluidInsert?.Invoke(user, slot, fluid);
 
-			if (existing.Fluid == null) Fluids[slot] = reachedLimit ? CloneFluidWithSize(fluid, toInsert) : fluid;
+			if (existing.Fluid == null) Fluids[slot] = reachedLimit ? CloneFluidWithSize(fluid, toInsert) : new FluidStack(fluid.Fluid, fluid.Volume, slotSize);
 			else existing.Volume += toInsert;
 
-			fluid = reachedLimit ? CloneFluidWithSize(fluid, fluid.Volume - toInsert) : new FluidStack { MaxVolume = fluid.MaxVolume };
+			fluid = reachedLimit ? CloneFluidWithSize(fluid, fluid.Volume - toInsert) : new FluidStack(null, 0, fluid.MaxVolume);
 			return true;
 		}
 
@@ -130,32 +130,32 @@ namespace FluidLibrary
 		public bool RemoveFluid(object user, int slot, out FluidStack fluid, int amount = -1)
 		{
 			fluid = Fluids[slot];
-		
+
 			if (amount == 0) return false;
-		
+
 			ValidateSlotIndex(slot);
-		
+
 			if (!CanInteract(slot, Operation.Remove, user)) return false;
-		
+
 			if (fluid.Fluid == null) return false;
-		
+
 			// OnFluidRemove?.Invoke(user, slot);
-		
+
 			int toExtract = Utils.Min(amount < 0 ? int.MaxValue : amount, fluid.MaxVolume, fluid.Volume);
-		
+
 			if (fluid.Volume <= toExtract)
 			{
 				Fluids[slot] = null;
-		
+
 				return true;
 			}
-		
+
 			fluid = CloneFluidWithSize(fluid, toExtract);
 			Fluids[slot] = CloneFluidWithSize(fluid, fluid.Volume - toExtract);
-		
+
 			return true;
 		}
-		
+
 		/// <summary>
 		/// Removes an fluid from storage.
 		/// </summary>
