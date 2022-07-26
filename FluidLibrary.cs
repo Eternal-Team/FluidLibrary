@@ -7,5 +7,7 @@ public class FluidLibrary : Mod
 	public override void Load()
 	{
 		FluidSerializer.Load();
+
+		Hooking.Load();
 	}
 }

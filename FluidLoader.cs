@@ -5,7 +5,7 @@ namespace FluidLibrary;
 
 public static class FluidLoader
 {
-	internal static List<BaseFluid> fluids = new();
+	internal static Dictionary<int, BaseFluid> fluids = new();
 
 	internal static int NextTypeID = 3;
 
@@ -21,13 +21,13 @@ public static class FluidLoader
 			_ => NextTypeID++
 		};
 
-		fluids.Add(fluid);
+		fluids.Add(fluid.Type, fluid);
 	}
 
 	public static int FluidType<T>() where T : BaseFluid => ModContent.GetInstance<T>()?.Type ?? -1;
-	
+
 	public static BaseFluid GetFluid(int type) => fluids[type];
-	
+
 	// public static T CreateInstance<T>() where T : BaseFluid
 	// {
 	// 	T instance = (T)ModContent.GetInstance<T>().Clone();
