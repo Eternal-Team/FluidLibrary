@@ -1,32 +1,31 @@
-﻿namespace FluidLibrary
+﻿namespace FluidLibrary;
+
+public class Water : BaseFluid
 {
-	public class Water : BaseFluid
-	{
-		public override string Texture => "FluidLibrary/Textures/Water";
+	public override string Texture => "FluidLibrary/Textures/Water";
 
-		public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Water");
-		}
+	public override void SetStaticDefaults()
+	{
+		DisplayName.SetDefault("Water");
 	}
+}
 
-	public class Lava : BaseFluid
+public class Lava : BaseFluid
+{
+	public override string Texture => "FluidLibrary/Textures/Lava";
+
+	public override void SetStaticDefaults()
 	{
-		public override string Texture => "FluidLibrary/Textures/Lava";
-
-		public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Lava");
-		}
+		DisplayName.SetDefault("Lava");
 	}
+}
 
-	public class Honey : BaseFluid
+public class Honey : BaseFluid
+{
+	public override string Texture => "FluidLibrary/Textures/Honey";
+
+	public override void SetStaticDefaults()
 	{
-		public override string Texture => "FluidLibrary/Textures/Honey";
-
-		public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Honey");
-		}
+		DisplayName.SetDefault("Honey");
 	}
 }

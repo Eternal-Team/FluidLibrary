@@ -3,9 +3,9 @@
 	<Import Project="..\Mods.targets" />
 	<PropertyGroup>
 		<AssemblyName>FluidLibrary</AssemblyName>
-		<TargetFramework>net45</TargetFramework>
-		<PlatformTarget>x86</PlatformTarget>
-		<LangVersion>7.3</LangVersion>
+		<TargetFramework>net6.0</TargetFramework>
+		<PlatformTarget>AnyCPU</PlatformTarget>
+		<LangVersion>latest</LangVersion>
 	</PropertyGroup>
 	<ItemGroup>
 		<PackageReference Include="tModLoader.CodeAssist" Version="0.1.*" />

@@ -1,60 +1,41 @@
-﻿using System.Text.RegularExpressions;
-using Terraria.ModLoader;
+﻿using Terraria.ModLoader;
 
-namespace FluidLibrary
+namespace FluidLibrary;
+
+public abstract class BaseFluid : ModTexturedType
 {
-	public abstract class BaseFluid : ModTexturedType
+	public int Type { get; internal set; }
+
+	public ModTranslation DisplayName { get; internal set; }
+
+	protected override void Register()
 	{
-		public override string Texture => "BaseLibrary/Assets/Textures/PlaceholderTexture";
+		ModTypeLookup<BaseFluid>.Register(this);
 
-		public ModTranslation DisplayName { get; internal set; }
-		public int Type { get; internal set; }
+		DisplayName = LocalizationLoader.GetOrCreateTranslation(Mod, $"FluidName.{Name}");
 
-		#region Loading
-		protected override void Register()
-		{
-			FluidLoader.RegisterFluid(this);
+		FluidLoader.RegisterFluid(this);
+	}
 
-			ModTypeLookup<BaseFluid>.Register(this);
+	public override void SetupContent()
+	{
+		SetStaticDefaults();
+	}
 
-			DisplayName = Mod.CreateTranslation("FluidName." + Name);
-		}
+	public sealed override void Load()
+	{
+		base.Load();
+	}
 
-		public override void SetupContent()
-		{
-			SetStaticDefaults();
+	public sealed override void Unload()
+	{
+		base.Unload();
+	}
 
-			if (DisplayName.IsDefault())
-				DisplayName.SetDefault(Regex.Replace(Name, "([A-Z])", " $1").Trim());
+	public virtual BaseFluid Clone() => (BaseFluid)MemberwiseClone();
 
-			// SetDefaults();
-		}
-
-		public sealed override void Load()
-		{
-			base.Load();
-		}
-
-		public sealed override void Unload()
-		{
-			base.Unload();
-		}
-		#endregion
-
-		public virtual BaseFluid Clone() => (BaseFluid)MemberwiseClone();
-
-		public virtual void SetStaticDefaults()
-		{
-		}
-
-		public override bool Equals(object obj)
-		{
-			if (obj is BaseFluid fluid)
-			{
-				return fluid.Type == Type;
-			}
-
-			return false;
-		}
+	public virtual bool IsTheSameAs(BaseFluid fluid)
+	{
+		return fluid.Type == Type;
 	}
 }

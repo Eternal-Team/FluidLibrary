@@ -1,0 +1,1 @@
+Allows the mod developer to define new fluids. Currently not made for them to be placeable.

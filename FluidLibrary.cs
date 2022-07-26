@@ -1,12 +1,11 @@
 ﻿using Terraria.ModLoader;
 
-namespace FluidLibrary
+namespace FluidLibrary;
+
+public class FluidLibrary : Mod
 {
-	public class FluidLibrary : Mod
+	public override void Load()
 	{
-		public override void Load()
-		{
-			FluidSerializer.Load();
-		}
+		FluidSerializer.Load();
 	}
 }
