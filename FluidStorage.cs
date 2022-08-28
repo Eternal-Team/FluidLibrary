@@ -44,13 +44,8 @@ public class FluidStorage : IReadOnlyList<FluidStack>
 		Fluids = new FluidStack[volumes.Length];
 		
 		for (int i = 0; i < volumes.Length; i++)
-			Fluids[i] = new FluidStack(null, 0);
+			Fluids[i] = new FluidStack();
 	}
-
-	// public FluidStorage(IEnumerable<FluidStack> fluids)
-	// {
-	// 	Fluids = fluids.ToArray();
-	// }
 
 	public FluidStorage Clone()
 	{
@@ -72,8 +67,7 @@ public class FluidStorage : IReadOnlyList<FluidStack>
 	/// <param name="slot">The slot.</param>
 	/// <param name="toInsert">The fluid.</param>
 	/// <returns>
-	/// True if the fluid was successfully inserted, even partially. False if the fluid is air, if the slot is already
-	/// fully occupied, if the slot rejects the fluid, or if the slot rejects the user.
+	/// True if the fluid was successfully inserted, even partially. False if the fluid is air, if the slot is already fully occupied, if the slot rejects the fluid, or if the slot rejects the user.
 	/// </returns>
 	public bool InsertFluid(object user, int slot, ref FluidStack toInsert)
 	{
@@ -104,7 +98,7 @@ public class FluidStorage : IReadOnlyList<FluidStack>
 		else
 			inStorage.Volume += toInsertCount;
 
-		toInsert = reachedLimit ? CloneFluidWithSize(toInsert, toInsert.Volume - toInsertCount) : new FluidStack(null, 0);
+		toInsert = reachedLimit ? CloneFluidWithSize(toInsert, toInsert.Volume - toInsertCount) : new FluidStack();
 		return true;
 	}
 
@@ -114,8 +108,7 @@ public class FluidStorage : IReadOnlyList<FluidStack>
 	/// <param name="user">The object doing this.</param>
 	/// <param name="toInsert">The fluid to insert.</param>
 	/// <returns>
-	/// True if the fluid was successfully inserted, even partially. False if the fluid is air, if the slot is already
-	/// fully occupied, if the slot rejects the fluid, or if the slot rejects the user.
+	/// True if the fluid was successfully inserted, even partially. False if the fluid is air, if the slot is already fully occupied, if the slot rejects the fluid, or if the slot rejects the user.
 	/// </returns>
 	public bool InsertFluid(object user, ref FluidStack toInsert)
 	{
@@ -146,12 +139,10 @@ public class FluidStorage : IReadOnlyList<FluidStack>
 
 	/// <summary>
 	/// Removes an fluid from storage and returns the fluid that was grabbed.
-	/// <para />
-	/// Compare the stack of the <paramref name="fluid" /> parameter with the <paramref name="amount" /> parameter to see if
-	/// the fluid was completely taken.
+	/// Compare the stack of the <paramref name="fluid" /> parameter with the <paramref name="amount" /> parameter to see if the fluid was completely taken.
 	/// </summary>
 	/// <param name="slot">The slot.</param>
-	/// <param name="fluid">The fluid that is . Returns null if unsuccessful.</param>
+	/// <param name="fluid">The fluid that is removed. Returns null if unsuccessful.</param>
 	/// <param name="amount">The amount of fluids to take from a stack.</param>
 	/// <param name="user">The object doing this.</param>
 	/// <returns>Returns true if any fluids were actually removed. False if the slot is air or if the slot rejects the user.</returns>
@@ -172,11 +163,11 @@ public class FluidStorage : IReadOnlyList<FluidStack>
 
 		// OnFluidRemove?.Invoke(user, slot);
 
-		int toExtract = Math.Min(amount < 0 ? int.MaxValue : amount, /*Volumes[slot],*/ fluid.Volume);
+		int toExtract = Math.Min(amount < 0 ? int.MaxValue : amount, fluid.Volume);
 		
 		if (fluid.Volume <= toExtract)
 		{
-			Fluids[slot] = new FluidStack(null, 0);
+			Fluids[slot] = new FluidStack();
 
 			return true;
 		}
@@ -201,8 +192,7 @@ public class FluidStorage : IReadOnlyList<FluidStack>
 	/// <param name="quantity">The amount to increase/decrease the fluid's stack.</param>
 	/// <param name="user">The object doing this.</param>
 	/// <returns>
-	/// True if the fluid was successfully affected. False if the slot denies the user, if the fluid is air, or if the
-	/// quantity is zero.
+	/// True if the fluid was successfully affected. False if the slot denies the user, if the fluid is air, or if the quantity is zero.
 	/// </returns>
 	public bool ModifyStackSize(object user, int slot, int quantity)
 	{
@@ -291,7 +281,7 @@ public class FluidStorage : IReadOnlyList<FluidStack>
 
 	private static FluidStack CloneFluidWithSize(FluidStack fluidStack, int size)
 	{
-		if (size == 0) return new FluidStack(null, 0);
+		if (size == 0) return new FluidStack();
 		FluidStack copy = fluidStack.Clone();
 		copy.Volume = size;
 		return copy;
