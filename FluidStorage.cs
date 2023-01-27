@@ -18,6 +18,8 @@ public class FluidStorage : IReadOnlyList<FluidStack>
 
 	internal FluidStack[] Fluids;
 	internal int[] Volumes;
+	
+	// todo: add contentschanged
 
 	public int Count => Fluids.Length;
 
@@ -42,7 +44,7 @@ public class FluidStorage : IReadOnlyList<FluidStack>
 	{
 		Volumes = volumes;
 		Fluids = new FluidStack[volumes.Length];
-		
+
 		for (int i = 0; i < volumes.Length; i++)
 			Fluids[i] = new FluidStack();
 	}
@@ -67,7 +69,8 @@ public class FluidStorage : IReadOnlyList<FluidStack>
 	/// <param name="slot">The slot.</param>
 	/// <param name="toInsert">The fluid.</param>
 	/// <returns>
-	/// True if the fluid was successfully inserted, even partially. False if the fluid is air, if the slot is already fully occupied, if the slot rejects the fluid, or if the slot rejects the user.
+	/// True if the fluid was successfully inserted, even partially. False if the fluid is air, if the slot is already fully
+	/// occupied, if the slot rejects the fluid, or if the slot rejects the user.
 	/// </returns>
 	public bool InsertFluid(object user, int slot, ref FluidStack toInsert)
 	{
@@ -108,7 +111,8 @@ public class FluidStorage : IReadOnlyList<FluidStack>
 	/// <param name="user">The object doing this.</param>
 	/// <param name="toInsert">The fluid to insert.</param>
 	/// <returns>
-	/// True if the fluid was successfully inserted, even partially. False if the fluid is air, if the slot is already fully occupied, if the slot rejects the fluid, or if the slot rejects the user.
+	/// True if the fluid was successfully inserted, even partially. False if the fluid is air, if the slot is already fully
+	/// occupied, if the slot rejects the fluid, or if the slot rejects the user.
 	/// </returns>
 	public bool InsertFluid(object user, ref FluidStack toInsert)
 	{
@@ -139,7 +143,8 @@ public class FluidStorage : IReadOnlyList<FluidStack>
 
 	/// <summary>
 	/// Removes an fluid from storage and returns the fluid that was grabbed.
-	/// Compare the stack of the <paramref name="fluid" /> parameter with the <paramref name="amount" /> parameter to see if the fluid was completely taken.
+	/// Compare the stack of the <paramref name="fluid" /> parameter with the <paramref name="amount" /> parameter to see if
+	/// the fluid was completely taken.
 	/// </summary>
 	/// <param name="slot">The slot.</param>
 	/// <param name="fluid">The fluid that is removed. Returns null if unsuccessful.</param>
@@ -164,7 +169,7 @@ public class FluidStorage : IReadOnlyList<FluidStack>
 		// OnFluidRemove?.Invoke(user, slot);
 
 		int toExtract = Math.Min(amount < 0 ? int.MaxValue : amount, fluid.Volume);
-		
+
 		if (fluid.Volume <= toExtract)
 		{
 			Fluids[slot] = new FluidStack();
@@ -192,7 +197,8 @@ public class FluidStorage : IReadOnlyList<FluidStack>
 	/// <param name="quantity">The amount to increase/decrease the fluid's stack.</param>
 	/// <param name="user">The object doing this.</param>
 	/// <returns>
-	/// True if the fluid was successfully affected. False if the slot denies the user, if the fluid is air, or if the quantity is zero.
+	/// True if the fluid was successfully affected. False if the slot denies the user, if the fluid is air, or if the quantity
+	/// is zero.
 	/// </returns>
 	public bool ModifyStackSize(object user, int slot, int quantity)
 	{
@@ -225,6 +231,15 @@ public class FluidStorage : IReadOnlyList<FluidStack>
 		return true;
 	}
 
+	public void TransferTo(object? user, FluidStorage to, int fromSlot, int amount = -1)
+	{
+		if (RemoveFluid(user, fromSlot, out var item, amount))
+		{
+			to.InsertFluid(user, ref item);
+			InsertFluid(user, ref item);
+		}
+	}
+
 	/// <summary>
 	/// Gets if a given fluid is valid to be inserted into in a given slot.
 	/// </summary>
@@ -244,7 +259,7 @@ public class FluidStorage : IReadOnlyList<FluidStack>
 			limit = int.MaxValue;
 		return limit;
 	}
-	
+
 	#region IO
 	public virtual TagCompound Save()
 	{
